@@ -5,3 +5,6 @@ demos/
 extras/documentation
 nohup.out
 *.dump
+vendor/
+composer.lock
+
