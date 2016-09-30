@@ -1,7 +1,7 @@
 {
-    "name": "zircote/rhubarb",
+    "name": "lizeqing/rhubarb",
     "description": "A PHP Celery Client Implementation",
-    "homepage": "https://github.com/zircote/Rhubarb",
+    "homepage": "https://github.com/lizeqing/Rhubarb",
     "type": "library",
     "license" : "Apache-2.0",
     "keywords": ["Celery", "Job Queue", "Asynchronous", "work flow", "task schedule"],
