@@ -34,14 +34,15 @@ class Predis extends PredisConnector implements ResultStoreInterface
      */
     public function getTaskResult(\Rhubarb\Task $task)
     {
-        $pubsub = $this->getConnection()->pubSub();
-        $pubsub->subscribe('celery-task-meta-' . $task->getId());
-        foreach ($pubsub as $message) {
-            if ($message->kind == 'message'){
-                $message = json_decode($message->payload);
-                $pubsub->unsubscribe('celery-task-meta-' . $task->getId());
-                return $message;
+        $result = $this->getConnection()->get('celery-task-meta-' . $task->getId());
+        if (! empty($result)) {
+            $message = json_decode($result);
+            if (json_last_error()) {
+                throw new \Rhubarb\Exception\InvalidJsonException('Serialization Error, result is not valid JSON');
             }
+            return $message;
+        } else {
+            return false;
         }
     }
 }

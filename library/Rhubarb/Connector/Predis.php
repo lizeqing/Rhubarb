@@ -78,8 +78,8 @@ class Predis
                 $uri['scheme'] = $uri['scheme'] == 'unix' ? : 'tcp';
             }
             if (isset($uri['path'])) {
-                $uri['database'] = trim($uri['path'], '/');
-                $options['connection']['database'] = isset($uri['databsae']) ? $uri['database'] : null;
+                $database = trim($uri['path'], '/');
+                $options['connection']['database'] = empty($database) ? null : $database;
             }
             $options['connection']['host'] = $uri['host'];
             $options['connection']['port'] = isset($uri['port']) ? $uri['port'] : 6379;
@@ -98,7 +98,6 @@ class Predis
     {
         if (!$this->connection) {
             $options = $this->getOptions();
-            $options['connection'] = preg_replace('/redis\:/', 'tcp:', $options['connection']);
             $connection = new Client($options['connection'], @$options['options'] ? : array());
             $this->setConnection($connection);
         }

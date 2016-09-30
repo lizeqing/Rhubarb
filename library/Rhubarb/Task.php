@@ -477,13 +477,26 @@ class Task
         if (!$this->ready()) {
             throw new \Rhubarb\Exception\TimeoutException(
                 sprintf(
-                    'Task %s(%s) did not return after %s seconds',
+                    'Task %s[%s] did not return after %s seconds',
+                    $this->getName(),
                     $this->getId(),
-                    (string)$this,
                     $timeout
                 )
             );
         }
+
+        if ($this->failed()) {
+            throw new \Rhubarb\Exception\Exception(
+                sprintf(
+                    'Task %s[%s] raised unexpected %s(%s)',
+                    $this->getName(),
+                    $this->getId(),
+                    $this->responseBody->result->exc_type,
+                    $this->responseBody->result->exc_message
+                )
+            );
+        }
+
         return $this->responseBody->result;
     }
 
