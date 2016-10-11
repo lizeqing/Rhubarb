@@ -21,7 +21,7 @@ namespace Rhubarb;
  * @category    Rhubarb
  * @subcategory Task
  */
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @package     Rhubarb
