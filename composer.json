@@ -1,12 +1,12 @@
 {
-    "name": "lizeqing/rhubarb",
+    "name": "datartisan/rhubarb",
     "description": "A PHP Celery Client Implementation",
-    "homepage": "https://github.com/lizeqing/Rhubarb",
+    "homepage": "https://github.com/Datartisan/Rhubarb",
     "type": "library",
     "license" : "Apache-2.0",
     "keywords": ["Celery", "Job Queue", "Asynchronous", "work flow", "task schedule"],
     "support": {
-        "issues": "https://github.com/zircote/Rhubarb/issues"
+        "issues": "https://github.com/Datartisan/Rhubarb/issues"
     },
     "authors": [
         {
