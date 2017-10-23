@@ -104,7 +104,7 @@ class Task
      * @var Message
      */
     public $message;
-    
+
     /**
      * @param string      $name
      * @param array       $args
@@ -144,7 +144,7 @@ class Task
      * - queue: Simple routing (name <-> name) is accomplished using the queue option.
      * - queue_args
      * - exchange: Name of exchange (or a kombu.entity.Exchange) to send the message to.
-     * 
+     *
      * @param array $options
      * @throws \RuntimeException
      * @return Task
@@ -208,9 +208,7 @@ class Task
     public function getResult()
     {
         if ($this->getRhubarb()->getResultStore()) {
-            if(!$this->responseBody){
-                $this->responseBody = $this->getRhubarb()->getResultStore()->getTaskResult($this);
-            }
+            $this->responseBody = $this->getRhubarb()->getResultStore()->getTaskResult($this);
         } else {
             throw new \Rhubarb\Exception\Exception('no ResultStore is defined');
         }
@@ -334,7 +332,7 @@ class Task
     }
 
     /**
-     * @param \DateTime $eta  
+     * @param \DateTime $eta
      * @return Task
      */
     public function setEta(\DateTime $eta)
@@ -468,7 +466,7 @@ class Task
         $iterationLimit = (int)($timeout / $interval);
 
         for ($i = 0; $i < $iterationLimit; $i++) {
-            if ($this->ready()) {
+            if ($this->ready() && $this->responseBody->status != self::RETRY) {
                 break;
             }
             usleep($intervalUs);
@@ -576,7 +574,7 @@ class Task
     {
         return $this->taskSent;
     }
-    
+
     /**
      * @return array
      */
@@ -593,7 +591,7 @@ class Task
             'eta'       => ($this->eta instanceof \DateTime) ? $this->eta->format(\DateTime::ISO8601) : null,
             'errbacks'  => $this->errbacks
         );
-        $encoding = ($this->getMessage()->getBodyEncoding() || $this->getMessage()->getContentEncoding()); 
+        $encoding = ($this->getMessage()->getBodyEncoding() || $this->getMessage()->getContentEncoding());
         switch ($encoding) {
             case Rhubarb::CONTENT_ENCODING_BASE64:
                 $body = base64_encode(json_encode($body));
