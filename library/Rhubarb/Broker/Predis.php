@@ -34,6 +34,6 @@ class Predis extends PredisConnection implements BrokerInterface
         $task->getMessage()->setPropDeliveryMode(2)->setPropDeliveryTag(2);
         $task->getMessage()->setBodyEncoding(Rhubarb::CONTENT_ENCODING_BASE64);
         $task->toArray();
-        $this->getConnection()->lpush($task->getMessage()->getPropExchange(), (string) $task->getMessage());
+        $this->getConnection()->lpush($task->getMessage()->getPropRoutingKey(), (string) $task->getMessage());
     }
 }
